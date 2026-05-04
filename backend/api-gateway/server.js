@@ -17,15 +17,18 @@ app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, '../../frontend')));
 
 // Standard Proxies (Backend Microservices)
-app.use('/auth', createProxyMiddleware({ target: 'http://localhost:3001/auth', changeOrigin: true }));
-app.use('/parking', createProxyMiddleware({ target: 'http://localhost:3002/parking', changeOrigin: true }));
+const USER_SERVICE_URL = process.env.USER_SERVICE_URL || 'http://localhost:3001';
+const PARKING_SERVICE_URL = process.env.PARKING_SERVICE_URL || 'http://localhost:3002';
+app.use('/auth', createProxyMiddleware({ target: USER_SERVICE_URL + '/auth', changeOrigin: true }));
+app.use('/parking', createProxyMiddleware({ target: PARKING_SERVICE_URL + '/parking', changeOrigin: true }));
 
 /**
  * SSE Proxy for Notification Service
  * Optimized for persistent, non-buffered connections
  */
+const NOTIFICATION_SERVICE_URL = process.env.NOTIFICATION_SERVICE_URL || 'http://localhost:3003';
 app.use('/notification', createProxyMiddleware({ 
-    target: 'http://localhost:3003/notification', 
+    target: NOTIFICATION_SERVICE_URL + '/notification', 
     changeOrigin: true,
     ws: true,
     proxyTimeout: 0,
@@ -38,9 +41,9 @@ app.use('/notification', createProxyMiddleware({
 }));
 
 // Health Check Proxying
-app.use('/health/user', createProxyMiddleware({ target: 'http://localhost:3001/health', changeOrigin: true }));
-app.use('/health/parking', createProxyMiddleware({ target: 'http://localhost:3002/health', changeOrigin: true }));
-app.use('/health/notification', createProxyMiddleware({ target: 'http://localhost:3003/health', changeOrigin: true }));
+app.use('/health/user', createProxyMiddleware({ target: USER_SERVICE_URL + '/health', changeOrigin: true }));
+app.use('/health/parking', createProxyMiddleware({ target: PARKING_SERVICE_URL + '/health', changeOrigin: true }));
+app.use('/health/notification', createProxyMiddleware({ target: NOTIFICATION_SERVICE_URL + '/health', changeOrigin: true }));
 
 // Default Route for UI (fallback to index.html for SPA-like feel)
 app.get('/*splat', (req, res) => {
