@@ -10,36 +10,49 @@ let isLoginMode = true;
 const getEl = (id) => document.getElementById(id);
 
 const authSection = getEl('auth-section');
-const dashboardSection = getEl('dashboard-section');
-const userStatus = getEl('user-status');
+const appWrapper = getEl('app-wrapper');
 const usernameDisplay = getEl('username-display');
 const roleDisplay = getEl('role-display');
-const viewModeText = getEl('view-mode-text');
+const welcomeName = getEl('welcome-name');
 const parkingGrid = getEl('parking-grid');
 const toastContainer = getEl('toast-container');
 const authForm = getEl('auth-form');
 const authSubmit = getEl('auth-submit');
 const authTitle = getEl('auth-title');
 const authSubtitle = getEl('auth-subtitle');
-const authToggleText = getEl('auth-toggle-text');
-const authToggleLink = getEl('auth-toggle-link');
-const roleGroup = getEl('role-group');
 const logoutBtn = getEl('logout-btn');
+const viewTitle = getEl('view-title');
+
+// Dashboard metrics
+const dashAvailable = getEl('dash-available');
+const dashOccupied = getEl('dash-occupied');
+
+// Modal Elements
+const spotModal = getEl('spot-modal');
+const closeModal = getEl('close-modal');
+const modalSpotId = getEl('modal-spot-id');
+const modalSpotStatus = getEl('modal-spot-status');
+const modalBtnFree = getEl('modal-btn-free');
+const modalBtnReserve = getEl('modal-btn-reserve');
+
+let currentActiveSpot = null;
 
 /**
  * Robust Initialization
  */
 function init() {
-    console.log("Initializing ParkSim OS...");
+    console.log("Initializing ParkCloud UI...");
     
-    // Safety check: if token exists but username doesn't, force signout
+    setupNavigation();
+
+    // Safety check
     if (token && !username) {
         logout();
         return;
     }
 
     if (token) {
-        showDashboard();
+        showApp();
     } else {
         showAuth();
     }
@@ -49,23 +62,25 @@ function init() {
 
 function showAuth() {
     if (authSection) authSection.style.display = 'flex';
-    if (dashboardSection) dashboardSection.style.display = 'none';
-    if (userStatus) userStatus.style.display = 'none';
+    if (appWrapper) appWrapper.style.display = 'none';
 }
 
-function showDashboard() {
-    if (!authSection || !dashboardSection || !userStatus) return;
+function showApp() {
+    if (!authSection || !appWrapper) return;
 
     authSection.style.display = 'none';
-    dashboardSection.style.display = 'block';
-    userStatus.style.display = 'flex';
+    appWrapper.style.display = 'flex';
     
-    if (usernameDisplay) usernameDisplay.textContent = username || 'UNKNOWN_NODE';
-    if (roleDisplay) roleDisplay.textContent = role === 'admin' ? '[ADMIN_PRIVILEGES]' : '[VIEWER_ONLY]';
-    if (viewModeText) viewModeText.textContent = role === 'admin' ? 'SIMULATION (CONTROL_CONNECTED)' : 'SIMULATION (READ_ONLY)';
+    if (usernameDisplay) usernameDisplay.textContent = username || 'Unknown Node';
+    if (welcomeName) welcomeName.textContent = username || 'User';
+    if (roleDisplay) roleDisplay.textContent = role === 'admin' ? 'SYSTEM ADMIN' : 'OPERATOR';
     
     fetchParkingSpots();
     setupSSE();
+
+    // Explicitly redirect to dashboard after login
+    const dashboardLink = document.querySelector('.nav-link[data-target="dashboard"]');
+    if (dashboardLink) dashboardLink.click();
 }
 
 function logout() {
@@ -74,75 +89,89 @@ function logout() {
     username = null;
     role = 'user';
     showAuth();
-    showToast('SYSTEM_EXIT', 'Simulation session ended.', 'success');
+    showToast('SYSTEM EXIT', 'Session terminated successfully.', 'success');
 }
 
-if (logoutBtn) logoutBtn.addEventListener('click', logout);
+if (logoutBtn) logoutBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    logout();
+});
 
-// ------------------- Authentication -------------------
+// ------------------- Navigation -------------------
 
-if (authToggleLink) {
-    authToggleLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        isLoginMode = !isLoginMode;
-        
-        if (isLoginMode) {
-            authTitle.textContent = 'SYSTEM_BOOT';
-            authSubtitle.textContent = 'Initialize simulation link';
-            authSubmit.textContent = 'EXECUTE';
-            authToggleText.textContent = "No ID?";
-            authToggleLink.textContent = 'CREATE_NEW';
-            roleGroup.style.display = 'none';
-        } else {
-            authTitle.textContent = 'NEW_NODE';
-            authSubtitle.textContent = 'Allocate new simulator ID';
-            authSubmit.textContent = 'GENERATE';
-            authToggleText.textContent = "Have ID?";
-            authToggleLink.textContent = 'LOGIN_BACK';
-            roleGroup.style.display = 'block';
-        }
+function setupNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link[data-target]');
+    const sections = document.querySelectorAll('.view-section');
+
+    const titles = {
+        'dashboard': 'Dashboard Overview',
+        'parking': 'Real-time Parking Grid',
+        'booking': 'Booking Management',
+        'history': 'Booking History',
+        'analytics': 'System Analytics',
+        'admin': 'Admin Control Panel',
+        'settings': 'System Notifications'
+    };
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Remove active class
+            navLinks.forEach(l => l.classList.remove('active'));
+            sections.forEach(s => s.classList.remove('active'));
+            
+            // Add active class
+            link.classList.add('active');
+            const target = link.getAttribute('data-target');
+            
+            const targetSection = getEl(`view-${target}`);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            viewTitle.textContent = titles[target] || 'ParkCloud Interface';
+            
+            if (target === 'parking' || target === 'dashboard') {
+                fetchParkingSpots();
+            }
+        });
     });
 }
+
+// ------------------- Authentication -------------------
 
 if (authForm) {
     authForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const uname = getEl('username').value;
         const pass = getEl('password').value;
-        const userRole = getEl('role') ? getEl('role').value : 'user';
-
-        const endpoint = isLoginMode ? '/auth/login' : '/auth/register';
 
         try {
             const payload = { username: uname, password: pass };
-            if (!isLoginMode) payload.role = userRole;
 
-            const response = await fetch(`${BASE_URL}${endpoint}`, {
+            const response = await fetch(`${BASE_URL}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
             
             const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'Identity protocol failed');
+            if (!response.ok) throw new Error(data.error || 'Authentication rejected');
 
-            if (isLoginMode) {
-                token = data.token;
-                username = data.username;
-                role = data.role || 'user';
-                
-                localStorage.setItem('token', token);
-                localStorage.setItem('username', username);
-                localStorage.setItem('role', role);
-                
-                showDashboard();
-                showToast('UPLINK_SUCCESS', `Welcome back, ${username}`, 'success');
-            } else {
-                showToast('NODE_REGISTERED', 'Login to activate node.', 'success');
-                authToggleLink.click();
-            }
+            token = data.token;
+            username = data.username;
+            role = data.role || 'admin';
+            
+            localStorage.setItem('token', token);
+            localStorage.setItem('username', username);
+            localStorage.setItem('role', role);
+            
+            showApp();
+            showToast('SYSTEM CONNECTED', `Welcome back, ${username}`, 'success');
         } catch (err) {
-            showToast('UPLINK_FAILURE', err.message, 'error');
+            console.error("Auth Error:", err);
+            showToast('ACCESS DENIED', err.message, 'error');
         }
     });
 }
@@ -150,13 +179,25 @@ if (authForm) {
 // ------------------- Application Logic -------------------
 
 async function fetchParkingSpots() {
+    if (!token) return;
     try {
         const response = await fetch(`${BASE_URL}/parking`);
-        if (!response.ok) throw new Error('Data flow interrupted');
+        if (!response.ok) throw new Error('Network response was not ok');
         const spots = await response.json();
+        
+        updateDashboardMetrics(spots);
         renderParkingSpots(spots);
     } catch (err) {
-        showToast('DATALINK_ERROR', err.message, 'error');
+        console.error("Error fetching spots:", err);
+    }
+}
+
+function updateDashboardMetrics(spots) {
+    if (dashAvailable && dashOccupied) {
+        const freeCount = spots.filter(s => s.status === 'Free').length;
+        const occupiedCount = spots.filter(s => s.status === 'Occupied').length;
+        dashAvailable.textContent = freeCount;
+        dashOccupied.textContent = occupiedCount;
     }
 }
 
@@ -166,38 +207,71 @@ function renderParkingSpots(spots) {
     
     spots.forEach(spot => {
         const isFree = spot.status === 'Free';
-        const newStatus = isFree ? 'Occupied' : 'Free';
-        const actionText = isFree ? 'SET_OCCUPIED' : 'SET_FREE';
         const stateClass = isFree ? 'free' : 'occupied';
         const displayStatus = isFree ? 'AVAILABLE' : 'BUSY';
 
         const el = document.createElement('div');
-        el.className = `pixel-slot ${stateClass}`;
+        el.className = `brutal-slot ${stateClass}`;
         
-        // Context-aware controls
-        const controlHtml = role === 'admin' 
-            ? `<div class="controls">
-                <button class="pixel-btn sm primary" onclick="toggleSpot(${spot.id}, '${newStatus}')">
-                    ${actionText}
-                </button>
-               </div>`
-            : '';
-
         el.innerHTML = `
-            <div class="slot-header">
-                <span class="slot-id">ID_${spot.id}</span>
-                <div class="indicator-box"></div>
-            </div>
-            <p class="slot-location">${spot.location}</p>
-            <span class="slot-status-text">LNK: ${displayStatus}</span>
-            ${controlHtml}
+            <span class="sub-text">${spot.location}</span>
+            <div class="slot-id-lg">${spot.id}</div>
+            <div class="status-badge">${displayStatus}</div>
         `;
+
+        el.addEventListener('click', () => openSpotModal(spot));
+
         parkingGrid.appendChild(el);
     });
 }
 
-window.toggleSpot = async (id, newStatus) => {
-    if (role !== 'admin' || !token) return; 
+// ------------------- Modal Logic -------------------
+
+function openSpotModal(spot) {
+    if (!spotModal) return;
+    currentActiveSpot = spot;
+    
+    modalSpotId.textContent = spot.location.split(' - ')[0] || `ID: ${spot.id}`;
+    
+    const isFree = spot.status === 'Free';
+    modalSpotStatus.textContent = isFree ? 'AVAILABLE' : 'BUSY';
+    modalSpotStatus.className = `tag text-white border-2 border-black ${isFree ? 'bg-teal' : 'bg-pink'}`;
+    
+    if (role === 'admin') {
+        modalBtnFree.style.display = 'block';
+        modalBtnReserve.style.display = 'block';
+    } else {
+        modalBtnFree.style.display = 'none';
+        modalBtnReserve.style.display = 'none';
+    }
+
+    spotModal.style.display = 'flex';
+}
+
+if (closeModal) {
+    closeModal.addEventListener('click', () => {
+        spotModal.style.display = 'none';
+    });
+}
+
+if (modalBtnFree) {
+    modalBtnFree.addEventListener('click', () => {
+        if (currentActiveSpot) toggleSpot(currentActiveSpot.id, 'Free');
+    });
+}
+
+if (modalBtnReserve) {
+    modalBtnReserve.addEventListener('click', () => {
+        if (currentActiveSpot) toggleSpot(currentActiveSpot.id, 'Occupied');
+    });
+}
+
+async function toggleSpot(id, newStatus) {
+    if (role !== 'admin' || !token) {
+        showToast('DENIED', 'Admin privileges required', 'error');
+        return;
+    }
+    
     try {
         const response = await fetch(`${BASE_URL}/parking/update/${id}`, {
             method: 'PUT',
@@ -213,12 +287,12 @@ window.toggleSpot = async (id, newStatus) => {
             throw new Error(errData.error || 'Update failed');
         }
         
-        // Immediate data refresh
+        spotModal.style.display = 'none';
         fetchParkingSpots();
     } catch (err) {
-        showToast('CMD_FAILURE', err.message, 'error');
+        showToast('CMD FAILURE', err.message, 'error');
     }
-};
+}
 
 // ------------------- Real-time Notifications (SSE) -------------------
 
@@ -226,33 +300,26 @@ let eventSource = null;
 
 function setupSSE() {
     if (eventSource) {
-        console.log("[SSE] Closing existing connection...");
         eventSource.close();
     }
     
-    console.log("[SSE] Attempting uplink to simulation feed...");
     eventSource = new EventSource(`${BASE_URL}/notification/stream`);
     
     eventSource.onopen = () => {
-        console.log("[SSE] Uplink established. Live updates ACTIVE.");
+        console.log("[SSE] Connected to data stream");
     };
 
     eventSource.onmessage = (event) => {
-        console.log("[SSE] Data Received:", event.data);
         try {
             const data = JSON.parse(event.data);
             
-            // Priority: Alert on status changes
             if (data.event === 'spot_freed') {
-                console.log(`[SIM_ULINK] SPOT FREE alert for ${data.location || 'Unknown'}`);
-                showToast('SYSTEM_ALERT: NODE_AVAILABLE', `Sector at ${data.location || 'Unknown'} is now FREE!`, 'success');
+                showToast('SYSTEM ALERT', `Spot at ${data.location || 'Unknown'} was released.`, 'success');
                 fetchParkingSpots();
             } else if (data.event === 'spot_busy') {
-                console.log(`[SIM_ULINK] SPOT BUSY alert for ${data.location || 'Unknown'}`);
-                showToast('SYSTEM_ALERT: NODE_BUSY', `Sector at ${data.location || 'Unknown'} is now OCCUPIED.`, 'error');
+                showToast('SYSTEM ALERT', `Spot at ${data.location || 'Unknown'} was reserved.`, 'error');
                 fetchParkingSpots();
             } else if (data.event === 'update' || data.event === 'connected') {
-                // General refresh sync
                 fetchParkingSpots();
             }
         } catch(e) {
@@ -261,7 +328,6 @@ function setupSSE() {
     };
 
     eventSource.onerror = (err) => {
-        console.error("[SSE] Uplink interrupted. Re-initializing in 5s...", err);
         eventSource.close();
         setTimeout(setupSSE, 5000);
     };
@@ -275,10 +341,9 @@ function showToast(title, message, type='success') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     
-    // Auto-disposal
     const timer = setTimeout(() => {
         if (toast.parentNode) toast.remove();
-    }, 5000);
+    }, 4000);
 
     toast.onclick = () => {
         clearTimeout(timer);
@@ -288,12 +353,12 @@ function showToast(title, message, type='success') {
     toast.innerHTML = `
         <div class="toast-content">
             <h4>${title}</h4>
-            <p>${message}</p>
+            <p style="font-size: 0.85rem; margin-top: 0.25rem;">${message}</p>
         </div>
     `;
 
     toastContainer.appendChild(toast);
 }
 
-// Run Simulation
+// Run App
 window.onload = init;

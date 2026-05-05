@@ -1,106 +1,1078 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ParkSim v1.0 | Pixel Parking</title>
-    <!-- Pixel Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <title>ParkCloud Distributed Infrastructure</title>
+    <!-- Modern Sans Serif Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@500;700;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
     <!-- Notification Toast Container -->
     <div id="toast-container" class="toast-container"></div>
 
-    <!-- Main Application Container -->
-    <div class="app-container">
+    <!-- Auth Section (Login) -->
+    <section id="auth-section" class="auth-section relative overflow-hidden">
         
-        <!-- Header -->
-        <header class="app-header">
-            <div class="logo">
-                <div class="pixel-car"></div>
-                <h1 class="pixel-text">PARKSIM_OS</h1>
+        <!-- Floating animated neo-brutalist cars -->
+        <div class="floating-car car-1">
+            <svg viewBox="0 0 200 120" width="280" height="168" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 20 60 L 20 90 L 180 90 L 180 60 L 140 20 L 60 20 Z" fill="#111" transform="translate(8, 8)"/>
+                <circle cx="55" cy="90" r="18" fill="#111" transform="translate(8, 8)"/>
+                <circle cx="145" cy="90" r="18" fill="#111" transform="translate(8, 8)"/>
+                <path d="M 20 60 L 20 90 L 180 90 L 180 60 L 140 20 L 60 20 Z" fill="#00d2d3" stroke="#111" stroke-width="6" stroke-linejoin="round"/>
+                <path d="M 65 26 L 135 26 L 155 54 L 45 54 Z" fill="#fff" stroke="#111" stroke-width="6" stroke-linejoin="round"/>
+                <line x1="100" y1="26" x2="100" y2="54" stroke="#111" stroke-width="6"/>
+                <circle cx="55" cy="90" r="18" fill="#fff" stroke="#111" stroke-width="6"/>
+                <circle cx="145" cy="90" r="18" fill="#fff" stroke="#111" stroke-width="6"/>
+                <circle cx="55" cy="90" r="6" fill="#111"/>
+                <circle cx="145" cy="90" r="6" fill="#111"/>
+                <rect x="16" y="65" width="12" height="15" fill="#ff6b6b" stroke="#111" stroke-width="4"/>
+                <rect x="172" y="65" width="12" height="15" fill="#fbd72b" stroke="#111" stroke-width="4"/>
+            </svg>
+        </div>
+        <div class="floating-car car-2">
+            <svg viewBox="0 0 200 120" width="320" height="192" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 20 60 L 20 90 L 180 90 L 180 60 L 140 20 L 60 20 Z" fill="#111" transform="translate(8, 8)"/>
+                <circle cx="55" cy="90" r="18" fill="#111" transform="translate(8, 8)"/>
+                <circle cx="145" cy="90" r="18" fill="#111" transform="translate(8, 8)"/>
+                <path d="M 20 60 L 20 90 L 180 90 L 180 60 L 140 20 L 60 20 Z" fill="#fbd72b" stroke="#111" stroke-width="6" stroke-linejoin="round"/>
+                <path d="M 65 26 L 135 26 L 155 54 L 45 54 Z" fill="#fff" stroke="#111" stroke-width="6" stroke-linejoin="round"/>
+                <line x1="100" y1="26" x2="100" y2="54" stroke="#111" stroke-width="6"/>
+                <circle cx="55" cy="90" r="18" fill="#fff" stroke="#111" stroke-width="6"/>
+                <circle cx="145" cy="90" r="18" fill="#fff" stroke="#111" stroke-width="6"/>
+                <circle cx="55" cy="90" r="6" fill="#111"/>
+                <circle cx="145" cy="90" r="6" fill="#111"/>
+                <rect x="16" y="65" width="12" height="15" fill="#ff6b6b" stroke="#111" stroke-width="4"/>
+                <rect x="172" y="65" width="12" height="15" fill="#fff" stroke="#111" stroke-width="4"/>
+            </svg>
+        </div>
+        <div class="floating-car car-3">
+            <svg viewBox="0 0 200 120" width="240" height="144" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 20 60 L 20 90 L 180 90 L 180 60 L 140 20 L 60 20 Z" fill="#111" transform="translate(8, 8)"/>
+                <circle cx="55" cy="90" r="18" fill="#111" transform="translate(8, 8)"/>
+                <circle cx="145" cy="90" r="18" fill="#111" transform="translate(8, 8)"/>
+                <path d="M 20 60 L 20 90 L 180 90 L 180 60 L 140 20 L 60 20 Z" fill="#00d2d3" stroke="#111" stroke-width="6" stroke-linejoin="round"/>
+                <path d="M 65 26 L 135 26 L 155 54 L 45 54 Z" fill="#fff" stroke="#111" stroke-width="6" stroke-linejoin="round"/>
+                <line x1="100" y1="26" x2="100" y2="54" stroke="#111" stroke-width="6"/>
+                <circle cx="55" cy="90" r="18" fill="#fff" stroke="#111" stroke-width="6"/>
+                <circle cx="145" cy="90" r="18" fill="#fff" stroke="#111" stroke-width="6"/>
+                <circle cx="55" cy="90" r="6" fill="#111"/>
+                <circle cx="145" cy="90" r="6" fill="#111"/>
+                <rect x="16" y="65" width="12" height="15" fill="#ff6b6b" stroke="#111" stroke-width="4"/>
+                <rect x="172" y="65" width="12" height="15" fill="#fbd72b" stroke="#111" stroke-width="4"/>
+            </svg>
+        </div>
+        <div class="floating-car car-4">
+            <svg viewBox="0 0 200 120" width="300" height="180" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 20 60 L 20 90 L 180 90 L 180 60 L 140 20 L 60 20 Z" fill="#111" transform="translate(8, 8)"/>
+                <circle cx="55" cy="90" r="18" fill="#111" transform="translate(8, 8)"/>
+                <circle cx="145" cy="90" r="18" fill="#111" transform="translate(8, 8)"/>
+                <path d="M 20 60 L 20 90 L 180 90 L 180 60 L 140 20 L 60 20 Z" fill="#ff6b6b" stroke="#111" stroke-width="6" stroke-linejoin="round"/>
+                <path d="M 65 26 L 135 26 L 155 54 L 45 54 Z" fill="#fff" stroke="#111" stroke-width="6" stroke-linejoin="round"/>
+                <line x1="100" y1="26" x2="100" y2="54" stroke="#111" stroke-width="6"/>
+                <circle cx="55" cy="90" r="18" fill="#fff" stroke="#111" stroke-width="6"/>
+                <circle cx="145" cy="90" r="18" fill="#fff" stroke="#111" stroke-width="6"/>
+                <circle cx="55" cy="90" r="6" fill="#111"/>
+                <circle cx="145" cy="90" r="6" fill="#111"/>
+                <rect x="16" y="65" width="12" height="15" fill="#fff" stroke="#111" stroke-width="4"/>
+                <rect x="172" y="65" width="12" height="15" fill="#fbd72b" stroke="#111" stroke-width="4"/>
+            </svg>
+        </div>
+
+        <div class="brutal-card auth-card">
+            <div class="auth-header">
+                <h1 class="logo-title">PARKCLOUD</h1>
+                <p class="logo-sub">DISTRIBUTED INFRASTRUCTURE</p>
+                <h2 id="auth-title">SYSTEM LOGIN</h2>
+                <p class="auth-subtitle" id="auth-subtitle">Access infrastructure node</p>
             </div>
-            <div class="user-status" id="user-status" style="display: none;">
-                <div class="user-info">
-                    <span id="username-display" class="pixel-label"></span>
-                    <span id="role-display" class="role-badge"></span>
+
+            <form id="auth-form" class="auth-form">
+                <div class="form-group">
+                    <label for="username">OPERATOR ID</label>
+                    <input type="text" id="username" placeholder="e.g. A-102" autocomplete="off" required>
                 </div>
-                <button id="logout-btn" class="pixel-btn sm">
-                    EXIT
+                <div class="form-group">
+                    <label for="password">PASSCODE</label>
+                    <input type="password" id="password" placeholder="••••••••" autocomplete="off" required>
+                </div>
+
+                <button type="submit" id="auth-submit" class="brutal-btn primary w-full" style="margin-top: 1.5rem;">
+                    INITIALIZE LINK
                 </button>
-            </div>
-        </header>
+            </form>
+        </div>
+    </section>
 
-        <!-- Main Content -->
+    <!-- Main Application Container -->
+    <div id="app-wrapper" class="app-wrapper" style="display: none;">
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <h1 class="logo-title">PARKCLOUD</h1>
+                <p class="logo-sub">DISTRIBUTED<br>INFRASTRUCTURE</p>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-target="dashboard"><span class="icon">⊞</span>
+                        Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-target="parking"><span class="icon">P</span> Parking</a></li>
+                <li><a href="#" class="nav-link" data-target="booking"><span class="icon">📱</span> Booking</a></li>
+                <li><a href="#" class="nav-link" data-target="history"><span class="icon">⏱</span> History</a></li>
+                <li><a href="#" class="nav-link" data-target="analytics"><span class="icon">📊</span> Analytics</a></li>
+                <li><a href="#" class="nav-link" data-target="admin"><span class="icon">🛡</span> Admin</a></li>
+            </ul>
+
+            <div class="sidebar-bottom">
+                <a href="#" class="nav-link" data-target="settings"><span class="icon">⚙</span> Settings</a>
+                <a href="#" id="logout-btn" class="nav-link text-red"><span class="icon">→</span> Logout</a>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
         <main class="main-content">
-            
-            <!-- Auth Section -->
-            <section id="auth-section" class="auth-section">
-                <div class="pixel-card auth-card">
-                    <div class="pixel-border"></div>
-                    <div class="card-content">
-                        <div class="auth-header">
-                            <h2 id="auth-title">SYSTEM_BOOT</h2>
-                            <p class="auth-subtitle" id="auth-subtitle">Initialize simulation link</p>
+
+            <!-- Top Header -->
+            <header class="topbar">
+                <h2 class="view-title" id="view-title">Dashboard Overview</h2>
+                <div class="user-profile">
+                    <button class="icon-btn">🔔</button>
+                    <div class="profile-info">
+                        <span id="username-display" class="profile-name">Alex Rivera</span>
+                        <span id="role-display" class="profile-role">SENIOR OPERATOR</span>
+                    </div>
+                    <div class="profile-avatar"></div>
+                </div>
+            </header>
+
+            <!-- View Container -->
+            <div class="view-container">
+
+                <!-- DASHBOARD VIEW -->
+                <div id="view-dashboard" class="view-section active">
+                    <h3 class="welcome-text">Good morning, <span id="welcome-name">Alex</span> 👋</h3>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card bg-yellow">
+                            <div class="badge">SYSTEM CAP</div>
+                            <h2 class="metric-val">1,240</h2>
+                            <p class="metric-label">TOTAL SPOTS</p>
                         </div>
-                        
-                        <form id="auth-form" class="auth-form">
-                            <div class="form-group">
-                                <label for="username">ID_USER:</label>
-                                <input type="text" id="username" placeholder="USERNAME..." autocomplete="off" required>
+                        <div class="metric-card bg-teal">
+                            <div class="badge"><span class="dot"></span> ACTIVE READY</div>
+                            <h2 class="metric-val" id="dash-available">482</h2>
+                            <p class="metric-label">AVAILABLE SPOTS</p>
+                        </div>
+                        <div class="metric-card bg-pink">
+                            <div class="badge">LIVE TRAFFIC</div>
+                            <h2 class="metric-val" id="dash-occupied">645</h2>
+                            <p class="metric-label">OCCUPIED SPOTS</p>
+                        </div>
+                        <div class="metric-card bg-purple">
+                            <div class="badge">PRE-BOOKED</div>
+                            <h2 class="metric-val">113</h2>
+                            <p class="metric-label">RESERVED SPOTS</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-bento">
+                        <div class="bento-chart brutal-card">
+                            <div class="bento-header">
+                                <h4>LIVE OCCUPANCY FLOW</h4>
+                                <div class="bento-actions">
+                                    <button class="brutal-btn outline sm">DAILY</button>
+                                    <button class="brutal-btn primary sm">WEEKLY</button>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="password">PASSCODE:</label>
-                                <input type="password" id="password" placeholder="PASSWORD..." autocomplete="off" required>
+                            <div class="mock-chart">
+                                <!-- Mock Bars -->
+                                <div class="bar" style="height: 30%"><span>M</span></div>
+                                <div class="bar" style="height: 50%"><span>T</span></div>
+                                <div class="bar" style="height: 40%"><span>W</span></div>
+                                <div class="bar active" style="height: 80%"><span>T</span></div>
+                                <div class="bar" style="height: 60%"><span>F</span></div>
+                                <div class="bar" style="height: 20%"><span>S</span></div>
+                                <div class="bar" style="height: 15%"><span>S</span></div>
                             </div>
-                            
-                            <!-- Role Selection (Hidden in Login mode via JS) -->
-                            <div class="form-group" id="role-group" style="display: none;">
-                                <label for="role">ASSIGN_ROLE:</label>
-                                <select id="role">
-                                    <option value="user">OPERATOR (VIEW ONLY)</option>
-                                    <option value="admin">ADMIN (CONTROL)</option>
-                                </select>
+                        </div>
+
+                        <div class="bento-side">
+                            <div class="brutal-card bg-blue text-white promo-card">
+                                <h5>SYSTEM ANALYTICS</h5>
+                                <h3>Peak parking usage at 6 PM</h3>
+                                <p>Predictive analysis suggests scaling security staff for the South Sector during this
+                                    window.</p>
                             </div>
-                            
-                            <div class="auth-actions">
-                                <button type="submit" id="auth-submit" class="pixel-btn primary">
-                                    EXECUTE
-                                </button>
+
+                            <div class="brutal-card sector-card">
+                                <h4>SECTOR CAPACITY</h4>
+                                <div class="progress-item">
+                                    <div class="prog-head"><span>NORTH WING</span><span>88%</span></div>
+                                    <div class="prog-bar">
+                                        <div class="fill bg-pink" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="prog-head"><span>SOUTH PLAZA</span><span>42%</span></div>
+                                    <div class="prog-bar">
+                                        <div class="fill bg-yellow" style="width: 42%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="prog-head"><span>UNDERGROUND</span><span>15%</span></div>
+                                    <div class="prog-bar">
+                                        <div class="fill bg-teal" style="width: 15%"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </form>
-                        
-                        <p class="auth-toggle">
-                            <span id="auth-toggle-text">No ID?</span>
-                            <a href="#" id="auth-toggle-link" class="pixel-link">CREATE_NEW</a>
-                        </p>
+                        </div>
+                    </div>
+
+                    <div class="brutal-card mt-6">
+                        <div class="bento-header">
+                            <h4>RECENT INFRASTRUCTURE EVENTS</h4>
+                            <button class="brutal-btn dark sm">VIEW ALL LOGS</button>
+                        </div>
+                        <table class="brutal-table">
+                            <thead>
+                                <tr>
+                                    <th>STATUS</th>
+                                    <th>EVENT DETAIL</th>
+                                    <th>LOCATION / SECTOR</th>
+                                    <th>TIMESTAMP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="tag bg-teal">RESERVED</span></td>
+                                    <td><strong>Spot #402 Allocated</strong><br><span class="sub-text">Model 3 (Plate:
+                                            KLA-092)</span></td>
+                                    <td>NORTH WING - LEVEL 2</td>
+                                    <td>09:42 AM</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="tag bg-pink">EXPIRED</span></td>
+                                    <td><strong>Spot #118 Cleared</strong><br><span class="sub-text">Automatic system
+                                            verification</span></td>
+                                    <td>SOUTH PLAZA - ROW A</td>
+                                    <td>09:38 AM</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="tag bg-yellow">MAINTENANCE</span></td>
+                                    <td><strong>Sensor Offline: Spot #662</strong><br><span class="sub-text">Battery
+                                            voltage critical alert</span></td>
+                                    <td>UNDERGROUND - SECTION B</td>
+                                    <td>09:15 AM</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </section>
 
-            <!-- Dashboard Section -->
-            <section id="dashboard-section" class="dashboard-section" style="display: none;">
-                <div class="dashboard-header">
-                    <div class="simulation-status">
-                        <span class="view-mode-label">MODE: <span id="view-mode-text">SIMULATION</span></span>
+                <!-- PARKING VIEW -->
+                <div id="view-parking" class="view-section">
+                    <div class="parking-toolbar">
+                        <div class="search-box">
+                            <input type="text" class="brutal-input" placeholder="Search spot ID or plate...">
+                        </div>
+                        <div class="toolbar-actions">
+                            <button class="brutal-btn outline">FILTER SECTOR</button>
+                            <button class="brutal-btn primary">EXPORT GRID</button>
+                        </div>
                     </div>
-                    <div class="legend">
+
+                    <div class="legend mb-4">
                         <div class="legend-item"><span class="block free"></span> FREE</div>
                         <div class="legend-item"><span class="block occupied"></span> BUSY</div>
                     </div>
+
+                    <!-- The Parking Simulator Grid -->
+                    <div id="parking-grid" class="parking-grid-brutal">
+                        <!-- Dynamic Pixel Spots mapped here -->
+                    </div>
                 </div>
-                
-                <!-- The Parking Simulator Grid -->
-                <div id="parking-grid" class="parking-grid">
-                    <!-- Dynamic Pixel Spots -->
+
+                <!-- BOOKING VIEW (Static Mock) -->
+                <div id="view-booking" class="view-section">
+                    <div class="booking-header-cards">
+                        <div class="brutal-card bg-blue text-black p-6 mb-6 w-2/3">
+                            <h2 class="text-2xl mb-2">LIVE MONITORING</h2>
+                            <p>Currently managing 142 active parking sessions across the distributed cloud grid. System
+                                latency is optimal at 14ms.</p>
+                        </div>
+                        <div class="brutal-card bg-yellow p-6 mb-6 w-1/3">
+                            <h4 class="mb-2">FILTER RESULTS ☶</h4>
+                            <div class="flex gap-2">
+                                <span class="tag bg-dark text-white">ALL</span>
+                                <span class="tag">URGENT</span>
+                                <span class="tag">UPCOMING</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="booking-grid">
+                        <div class="brutal-card card-blue flex flex-col">
+                            <div class="flex justify-between mb-4">
+                                <span class="font-bold">SPOT ID<br><span class="text-xl">A-102-X</span></span>
+                                <span class="tag bg-blue text-white">ACTIVE</span>
+                            </div>
+                            <div class="user-details mb-4 border-t-2 border-b-2 border-black py-2">
+                                <p>👤 Alexandre Dumas</p>
+                                <p>🚗 TX-900-B</p>
+                            </div>
+                            <div class="time-box border-2 border-black p-2 mb-4 bg-white">
+                                <span class="text-xs">TIME REMAINING</span>
+                                <h3 class="text-blue text-xl font-bold">⏱ 00:45:12</h3>
+                            </div>
+                            <div class="flex gap-2 mt-auto">
+                                <button class="brutal-btn outline flex-1">CANCEL</button>
+                                <button class="brutal-btn primary flex-1">EXTEND</button>
+                            </div>
+                        </div>
+
+                        <div class="brutal-card card-yellow flex flex-col">
+                            <div class="flex justify-between mb-4">
+                                <span class="font-bold">SPOT ID<br><span class="text-xl">B-405-Z</span></span>
+                                <span class="tag bg-dark text-white">EXPIRING</span>
+                            </div>
+                            <div class="user-details mb-4 border-t-2 border-b-2 border-black py-2">
+                                <p>👤 Elena Rodriguez</p>
+                                <p>🚗 CA-552-W</p>
+                            </div>
+                            <div class="time-box border-2 border-black p-2 mb-4 bg-white">
+                                <span class="text-xs">TIME REMAINING</span>
+                                <h3 class="text-red text-xl font-bold">⏱ 00:04:58</h3>
+                            </div>
+                            <div class="flex gap-2 mt-auto">
+                                <button class="brutal-btn outline flex-1">CANCEL</button>
+                                <button
+                                    class="brutal-btn bg-yellow border-2 border-black flex-1 font-bold">EXTEND</button>
+                            </div>
+                        </div>
+
+                        <div class="brutal-card card-red flex flex-col">
+                            <div class="flex justify-between mb-4">
+                                <span class="font-bold">SPOT ID<br><span class="text-xl">F-991-K</span></span>
+                                <span class="tag bg-pink text-white border-2 border-black">OVERTIME</span>
+                            </div>
+                            <div class="user-details mb-4 border-t-2 border-b-2 border-black py-2">
+                                <p>👤 Kenji Sato</p>
+                                <p>🚗 JP-881-Z</p>
+                            </div>
+                            <div class="time-box border-2 border-pink p-2 mb-4 bg-white">
+                                <span class="text-xs">TIME EXCEEDED</span>
+                                <h3 class="text-red text-xl font-bold">⚠ +00:12:44</h3>
+                            </div>
+                            <button class="brutal-btn bg-pink text-white w-full mt-auto border-2 border-black">INITIATE
+                                ENFORCEMENT</button>
+                        </div>
+                    </div>
                 </div>
-            </section>
+
+                <!-- HISTORY VIEW -->
+                <div id="view-history" class="view-section">
+
+                    <!-- Filter Bar -->
+                    <div class="brutal-card filter-bar mb-6">
+                        <div class="filter-group">
+                            <label>SEARCH TRANSACTION / SPOT ID</label>
+                            <div class="search-input-wrapper">
+                                <span class="search-icon">🔍</span>
+                                <input type="text" class="brutal-input" placeholder="e.g. PK-992">
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>DATE RANGE</label>
+                            <input type="date" class="brutal-input">
+                        </div>
+                        <div class="filter-group">
+                            <label>STATUS</label>
+                            <select class="brutal-input">
+                                <option>All Records</option>
+                                <option>Active</option>
+                                <option>Completed</option>
+                            </select>
+                        </div>
+                        <div class="filter-action">
+                            <button class="brutal-btn primary w-full flex items-center justify-center gap-2">
+                                <span>≡</span> APPLY
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- History Table -->
+                    <div class="brutal-card mb-6 p-0">
+                        <div class="table-responsive">
+                            <table class="brutal-table history-table">
+                                <thead class="bg-dark text-white">
+                                    <tr>
+                                        <th>SPOT ID</th>
+                                        <th>USER</th>
+                                        <th>START TIME</th>
+                                        <th>END TIME</th>
+                                        <th>DURATION</th>
+                                        <th>ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="text-blue font-bold">SPOT-A42</span></td>
+                                        <td>
+                                            <div class="user-cell">
+                                                <div class="avatar bg-yellow">JD</div>
+                                                <span class="font-bold">John Doe</span>
+                                            </div>
+                                        </td>
+                                        <td>Oct 24, 2023 | 08:30 AM</td>
+                                        <td>Oct 24, 2023 | 05:45 PM</td>
+                                        <td class="font-bold">09h 15m</td>
+                                        <td><button class="brutal-btn sm outline">DETAILS</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="text-blue font-bold">SPOT-B12</span></td>
+                                        <td>
+                                            <div class="user-cell">
+                                                <div class="avatar bg-teal text-white">AS</div>
+                                                <span class="font-bold">Alice Smith</span>
+                                            </div>
+                                        </td>
+                                        <td>Oct 24, 2023 | 09:15 AM</td>
+                                        <td>Oct 24, 2023 | 11:30 AM</td>
+                                        <td class="font-bold">02h 15m</td>
+                                        <td><button class="brutal-btn sm outline">DETAILS</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="text-blue font-bold">SPOT-C09</span></td>
+                                        <td>
+                                            <div class="user-cell">
+                                                <div class="avatar bg-pink text-white">MW</div>
+                                                <span class="font-bold">Marcus Wong</span>
+                                            </div>
+                                        </td>
+                                        <td>Oct 23, 2023 | 10:00 PM</td>
+                                        <td>Oct 24, 2023 | 06:00 AM</td>
+                                        <td class="font-bold">08h 00m</td>
+                                        <td><button class="brutal-btn sm outline">DETAILS</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="text-blue font-bold">SPOT-A02</span></td>
+                                        <td>
+                                            <div class="user-cell">
+                                                <div class="avatar bg-yellow">SL</div>
+                                                <span class="font-bold">Sarah Lee</span>
+                                            </div>
+                                        </td>
+                                        <td>Oct 23, 2023 | 12:45 PM</td>
+                                        <td>Oct 23, 2023 | 02:45 PM</td>
+                                        <td class="font-bold">02h 00m</td>
+                                        <td><button class="brutal-btn sm outline">DETAILS</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="text-blue font-bold">SPOT-D11</span></td>
+                                        <td>
+                                            <div class="user-cell">
+                                                <div class="avatar bg-dark text-white">RK</div>
+                                                <span class="font-bold">Robert King</span>
+                                            </div>
+                                        </td>
+                                        <td>Oct 23, 2023 | 07:00 AM</td>
+                                        <td>Oct 23, 2023 | 09:30 AM</td>
+                                        <td class="font-bold">02h 30m</td>
+                                        <td><button class="brutal-btn sm outline">DETAILS</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination-bar">
+                            <span class="font-bold text-sm">SHOWING 1-5 OF 124 TRANSACTIONS</span>
+                            <div class="pagination-controls">
+                                <button class="page-btn">&lt;</button>
+                                <button class="page-btn active">1</button>
+                                <button class="page-btn">2</button>
+                                <button class="page-btn">3</button>
+                                <button class="page-btn">&gt;</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summary Cards -->
+                    <div class="history-summary-grid">
+                        <div class="brutal-card bg-blue text-black flex flex-col justify-between">
+                            <h4 class="text-sm font-bold uppercase mb-4">AVERAGE DURATION</h4>
+                            <div class="text-3xl mb-4">04h 22m</div>
+                            <div class="bg-white/20 p-2 inline-block text-xs w-max mt-auto border-2 border-white">
+                                ↗ +12% from last month
+                            </div>
+                        </div>
+
+                        <div class="brutal-card bg-yellow flex flex-col justify-between">
+                            <h4 class="text-sm font-bold uppercase mb-4">PEAK BOOKING HOUR</h4>
+                            <div class="text-3xl mb-4">08:00 AM</div>
+                            <div class="text-xs font-bold mt-auto">
+                                MORNING RUSH DOMINANCE
+                            </div>
+                        </div>
+
+                        <div class="brutal-card flex flex-col justify-between">
+                            <h4 class="text-sm font-bold uppercase mb-4">USER RETENTION</h4>
+                            <div class="text-3xl mb-6">78%</div>
+                            <div class="prog-bar mt-auto">
+                                <div class="fill bg-blue" style="width: 78%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANALYTICS VIEW -->
+                <div id="view-analytics" class="view-section">
+
+                    <div class="analytics-header mb-6">
+                        <div>
+                            <h3 class="font-heading italic">SYSTEM INTELLIGENCE</h3>
+                            <p class="sub-text">Real-time occupancy trends and predictive behavior analysis.</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <button class="brutal-btn outline">Export CSV</button>
+                            <button class="brutal-btn primary">Refresh Node Data</button>
+                        </div>
+                    </div>
+
+                    <!-- Top Grid -->
+                    <div class="analytics-top-grid mb-6">
+                        <div class="brutal-card">
+                            <div class="flex justify-between items-center mb-6">
+                                <h4 class="font-heading italic text-sm">PEAK USAGE HOURS</h4>
+                                <button class="brutal-btn outline sm">WEEKLY VIEW</button>
+                            </div>
+                            <div class="mock-chart-large">
+                                <!-- Bars -->
+                                <div class="bar bg-white" style="height: 20%"></div>
+                                <div class="bar bg-yellow" style="height: 40%"></div>
+                                <div class="bar bg-yellow" style="height: 60%"></div>
+                                <div class="bar bg-pink" style="height: 80%"></div>
+                                <div class="bar bg-pink" style="height: 70%"></div>
+                                <div class="bar bg-yellow" style="height: 50%"></div>
+                                <div class="bar bg-yellow" style="height: 40%"></div>
+                                <div class="bar bg-yellow" style="height: 50%"></div>
+                                <div class="bar bg-blue" style="height: 90%"></div>
+                                <div class="bar bg-blue" style="height: 75%"></div>
+                                <div class="bar bg-yellow" style="height: 35%"></div>
+                            </div>
+                            <div class="chart-x-axis">
+                                08:00 AM &mdash;&mdash;&mdash;&mdash;&mdash;&mdash; 20:00 PM
+                            </div>
+                        </div>
+
+                        <div class="brutal-card bg-yellow flex flex-col p-6">
+                            <div class="icon-lg mb-4 text-3xl">💡</div>
+                            <h4 class="font-heading italic text-sm mb-auto">BEST TIME TO FIND PARKING</h4>
+
+                            <div class="mt-8">
+                                <h2 class="text-5xl font-black mb-2">05:45 AM</h2>
+                                <p class="text-xs font-bold uppercase">AVERAGE OCCUPANCY: 12%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Middle Grid -->
+                    <div class="analytics-middle-grid mb-6">
+                        <div class="brutal-card bg-dark text-white flex flex-col p-6">
+                            <div class="icon-lg mb-4 text-black text-3xl">🌙</div>
+                            <h4 class="font-heading italic text-sm mb-auto">LOWEST USAGE HOURS</h4>
+
+                            <div class="mt-8">
+                                <h2 class="text-5xl font-black text-blue mb-2">03:00 AM</h2>
+                                <p class="text-xs font-bold uppercase text-gray-400">NIGHT SHIFT CYCLE INACTIVE</p>
+                            </div>
+                        </div>
+
+                        <div class="brutal-card card-yellow-bg">
+                            <h4 class="font-heading italic text-sm mb-6">SECTOR OCCUPANCY COMPARISON</h4>
+
+                            <div class="progress-item mb-6">
+                                <div class="prog-head"><span>SECTOR ALPHA (NORTH)</span><span>92% FULL</span></div>
+                                <div class="prog-bar">
+                                    <div class="fill bg-pink" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item mb-6">
+                                <div class="prog-head"><span>SECTOR BETA (SOUTH)</span><span>45% FULL</span></div>
+                                <div class="prog-bar">
+                                    <div class="fill bg-yellow" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item mb-2">
+                                <div class="prog-head"><span>SECTOR GAMMA (WEST)</span><span>68% FULL</span></div>
+                                <div class="prog-bar">
+                                    <div class="fill bg-blue" style="width: 68%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Card -->
+                    <div class="brutal-card relative">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="font-heading italic text-sm">7-DAY TRANSACTION TRENDS</h4>
+                            <div class="legend">
+                                <div class="legend-item"><span class="block bg-blue"></span> REVENUE</div>
+                                <div class="legend-item"><span class="block bg-yellow"></span> TURNOVER</div>
+                            </div>
+                        </div>
+
+                        <div class="mock-line-chart">
+                            <!-- Basic mock line chart with a background pattern -->
+                            <div class="svg-container">
+                                <svg width="100%" height="200" viewBox="0 0 800 200" preserveAspectRatio="none">
+                                    <defs>
+                                        <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ddd" stroke-width="1"
+                                                stroke-dasharray="4" />
+                                        </pattern>
+                                    </defs>
+                                    <rect width="100%" height="100%" fill="url(#gridPattern)" />
+                                    <!-- The filled area -->
+                                    <path
+                                        d="M0,200 L100,200 L200,180 L300,80 L400,160 L500,40 L600,150 L700,80 L800,100 L800,200 Z"
+                                        fill="rgba(0,210,211,0.2)" />
+                                    <!-- The line -->
+                                    <polyline points="100,200 200,180 300,80 400,160 500,40 600,150 700,80 800,100"
+                                        fill="none" stroke="#1e5bfa" stroke-width="4" />
+                                    <!-- The dots -->
+                                    <circle cx="200" cy="180" r="6" fill="#1e5bfa" />
+                                    <circle cx="300" cy="80" r="6" fill="#1e5bfa" />
+                                    <circle cx="400" cy="160" r="6" fill="#fbd72b" />
+                                    <circle cx="500" cy="40" r="6" fill="#1e5bfa" />
+                                    <circle cx="600" cy="150" r="6" fill="#1e5bfa" />
+                                    <circle cx="700" cy="80" r="6" fill="#1e5bfa" />
+                                </svg>
+                            </div>
+                            <div class="chart-days">
+                                <span>MON</span>
+                                <span>TUE</span>
+                                <span class="active-day">WED</span>
+                                <span>THU</span>
+                                <span>FRI</span>
+                                <span>SAT</span>
+                                <span>SUN</span>
+                            </div>
+                        </div>
+
+                        <!-- Floating Live Node Status -->
+                        <div class="floating-status-card brutal-card bg-white">
+                            <h4 class="text-sm font-bold text-blue mb-2">LIVE NODE STATUS</h4>
+                            <div class="flex items-center gap-2 mb-2 text-xs font-bold">
+                                <span class="status-dot"></span>
+                                ALL SYSTEMS NOMINAL
+                            </div>
+                            <p class="text-xs text-gray-600 mb-4">
+                                Central Processing Unit processing 14.2k events per minute from 42 parking nodes across
+                                the distributed cloud network.
+                            </p>
+                            <button class="brutal-btn outline sm w-full">VIEW LOG DUMP</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADMIN VIEW -->
+                <div id="view-admin" class="view-section">
+                    
+                    <div class="flex justify-between items-center mb-6 pb-4 border-b-2 border-dark" style="border-bottom-width: 2px; border-color: #111;">
+                        <div>
+                            <span class="text-blue font-bold uppercase mr-4">ADMIN PANEL</span>
+                            <span class="pl-4 text-gray-500 font-bold text-sm" style="border-left: 2px solid #111;">Infrastructure Management</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between mb-6">
+                        <div style="width: 50%;">
+                            <h4 class="font-heading italic text-sm mb-2" style="color: #666;">INFRASTRUCTURE NODES</h4>
+                            <p class="text-xs text-blue">Manage real-time distributed parking assets. Add new sector clusters or modify existing node configurations across the cloud network.</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="brutal-card p-4 flex items-center gap-4 py-2">
+                                <span class="text-3xl font-black text-blue">1,284</span>
+                                <span class="text-xs font-bold text-gray-500 uppercase">TOTAL<br>SPOTS</span>
+                            </div>
+                            <div class="brutal-card bg-yellow p-4 flex items-center gap-4 py-2">
+                                <span class="text-3xl font-black">42</span>
+                                <span class="text-xs font-bold text-gray-500 uppercase">ACTIVE<br>HUBS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grid Layout for cards -->
+                    <div class="admin-grid mb-6">
+                        <!-- Column 1 -->
+                        <div class="flex flex-col gap-6">
+                            <!-- Card 1: Register Node Form -->
+                            <div class="brutal-card flex flex-col p-6 h-full">
+                                <h4 class="font-heading text-sm mb-6 flex items-center gap-2 text-blue">
+                                    <span style="border: 2px solid var(--primary-blue); padding: 0px 4px;">+</span> REGISTER NODE
+                                </h4>
+                                <hr style="border: 1px solid var(--dark); margin-bottom: 1.5rem; margin-top: -1rem;">
+                                
+                                <div class="form-group">
+                                    <label class="text-xs text-gray-600">SECTOR ID</label>
+                                    <input type="text" class="brutal-input" placeholder="e.g. SEC-09-ALPHA">
+                                </div>
+                                <div class="flex gap-4 mb-4">
+                                    <div class="form-group flex-1">
+                                        <label class="text-xs text-gray-600">CAPACITY</label>
+                                        <input type="number" class="brutal-input" value="50">
+                                    </div>
+                                    <div class="form-group flex-1">
+                                        <label class="text-xs text-gray-600">ZONE TYPE</label>
+                                        <select class="brutal-input">
+                                            <option>Public</option>
+                                            <option>Private</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-auto">
+                                    <label class="text-xs text-gray-600">NODE IP / DNS</label>
+                                    <input type="text" class="brutal-input" placeholder="node.parkcloud.io/auth-">
+                                </div>
+                                <button class="brutal-btn primary w-full mt-4 flex justify-center items-center gap-2">
+                                    <span style="font-size: 1.2rem;">🚀</span> DEPLOY NODE
+                                </button>
+                            </div>
+
+                            <!-- Card 4: System Purge -->
+                            <div class="brutal-card bg-yellow flex flex-col p-6 border-[3px] border-dark">
+                                <h4 class="font-bold text-sm mb-4 flex items-center gap-2">
+                                    <span>⚠️</span> SYSTEM PURGE
+                                </h4>
+                                <p class="text-xs mb-6 font-medium text-gray-800">Wipe inactive cache and decommission nodes that haven't responded in 72 hours. This action is permanent.</p>
+                                <button class="brutal-btn dark w-full text-xs flex items-center justify-center gap-2 mt-auto">
+                                    <span>🗑️</span> EXECUTE GLOBAL PURGE
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Column 2 -->
+                        <div class="flex flex-col gap-6">
+                            <!-- Card 2: Downtown-A1 -->
+                            <div class="brutal-card flex flex-col p-0">
+                                <div class="p-4 flex justify-between items-center" style="border-bottom: 2px solid var(--dark);">
+                                    <span class="font-bold flex items-center gap-2 text-sm"><span class="status-dot"></span> DOWNTOWN-A1</span>
+                                    <span class="tag bg-dark text-white text-[0.6rem]">ACTIVE</span>
+                                </div>
+                                <div class="p-4 flex gap-4" style="border-bottom: 2px solid var(--dark);">
+                                    <div class="p-2 flex-1 text-center" style="border: 2px solid var(--dark);">
+                                        <div class="text-[0.55rem] font-bold text-gray-500 mb-1">UTILITY</div>
+                                        <div class="text-2xl font-black">94%</div>
+                                    </div>
+                                    <div class="p-2 flex-1 text-center" style="border: 2px solid var(--dark);">
+                                        <div class="text-[0.55rem] font-bold text-gray-500 mb-1">REVENUE</div>
+                                        <div class="text-2xl font-black leading-tight">$12.4<br>K</div>
+                                    </div>
+                                </div>
+                                <div class="p-4 flex flex-col gap-3">
+                                    <button class="brutal-btn outline sm w-full text-left flex justify-between items-center text-xs">EDIT NODE PARAMS <span>✏️</span></button>
+                                    <button class="brutal-btn outline sm w-full text-left flex justify-between items-center text-xs text-blue">DECOMMISSION SPOT <span>🗑️</span></button>
+                                </div>
+                            </div>
+
+                            <!-- Card 5: Harbor-F2 -->
+                            <div class="brutal-card flex flex-col p-0">
+                                <div class="p-4 flex justify-between items-center" style="border-bottom: 2px solid var(--dark);">
+                                    <span class="font-bold flex items-center gap-2 text-sm"><span class="status-dot bg-pink"></span> HARBOR-F2</span>
+                                    <span class="tag bg-pink text-white text-[0.6rem]">OFFLINE</span>
+                                </div>
+                                <div class="p-4" style="border-bottom: 2px solid var(--dark);">
+                                    <div class="p-3" style="background: rgba(255,107,107,0.15); border: 2px solid var(--accent-pink);">
+                                        <div class="text-xs text-red font-bold mb-1">SIGNAL LOST</div>
+                                        <p class="text-xs text-red">Node unreachable since 02:45 AM. Maintenance dispatch recommended.</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 flex gap-2">
+                                    <button class="brutal-btn primary sm flex-1 text-xs px-1">REBOOT</button>
+                                    <button class="brutal-btn outline sm flex-1 text-xs px-1">DIAGNOSTICS</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column 3 -->
+                        <div class="flex flex-col gap-6 h-full">
+                            <!-- Card 3: Terminal Cluster B -->
+                            <div class="brutal-card bg-dark text-white p-6 relative overflow-hidden flex flex-col justify-end" style="height: 320px;">
+                                <!-- Mock image background -->
+                                <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, #fff 10px, #fff 11px);"></div>
+                                <div class="relative z-10">
+                                    <h3 class="font-heading italic text-4xl font-black mb-6 leading-none">TERMINAL<br>CLUSTER B</h3>
+                                    <span class="tag bg-yellow text-dark mb-4">EXPANSION PENDING</span>
+                                    <p class="text-[0.7rem] mt-2 font-bold leading-relaxed">Infrastructure scheduled for sector-wide upgrade in Q4. New sensors arriving.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 6: Register Hub -->
+                            <div class="brutal-card flex flex-col items-center justify-center text-center p-6 flex-1" style="border-style: dashed;">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold mb-4" style="border: 2px dashed var(--dark);">+</div>
+                                <h4 class="text-xs font-bold text-blue mb-2">REGISTER HUB</h4>
+                                <p class="text-[0.65rem] text-gray-500 font-bold">Connect a new regional<br>data concentrator</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Full Infrastructure Audit Table -->
+                    <div class="brutal-card p-0 mb-8">
+                        <div class="bg-dark text-white p-4 flex justify-between items-center">
+                            <h4 class="text-xs font-bold uppercase tracking-wide">FULL INFRASTRUCTURE AUDIT</h4>
+                            <div class="flex gap-2">
+                                <button class="brutal-btn dark sm" style="border: 2px solid white;">≡</button>
+                                <button class="brutal-btn dark sm" style="border: 2px solid white;">↓</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="brutal-table w-full">
+                                <thead style="background: #f0f0f5;">
+                                    <tr>
+                                        <th class="text-[0.7rem]">ID</th>
+                                        <th class="text-[0.7rem]">SECTOR</th>
+                                        <th class="text-[0.7rem]">HEALTH</th>
+                                        <th class="text-[0.7rem]">LOAD</th>
+                                        <th class="text-[0.7rem]">STATUS</th>
+                                        <th class="text-[0.7rem]">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-bold text-xs">#001-A</td>
+                                        <td class="text-xs font-medium">South-East Quadrant</td>
+                                        <td class="text-teal font-bold text-xs">98.2%</td>
+                                        <td class="text-xs">Low</td>
+                                        <td><span class="tag bg-blue text-white" style="font-size: 0.6rem;">SYNCING</span></td>
+                                        <td class="font-black text-lg cursor-pointer">⋮</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-xs">#042-B</td>
+                                        <td class="text-xs font-medium">Corporate District</td>
+                                        <td class="text-teal font-bold text-xs">99.9%</td>
+                                        <td class="text-xs">Critical</td>
+                                        <td><span class="tag bg-yellow text-dark" style="font-size: 0.6rem;">WARNING</span></td>
+                                        <td class="font-black text-lg cursor-pointer">⋮</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-xs">#089-C</td>
+                                        <td class="text-xs font-medium">Metro Hub Center</td>
+                                        <td class="text-red font-bold text-xs">12.0%</td>
+                                        <td class="text-xs">N/A</td>
+                                        <td><span class="tag bg-pink text-white" style="font-size: 0.6rem;">FAILURE</span></td>
+                                        <td class="font-black text-lg cursor-pointer">⋮</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SETTINGS VIEW (NOTIFICATIONS CENTER) -->
+                <div id="view-settings" class="view-section">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center mb-6 pb-4 border-b-2 border-dark" style="border-bottom-width: 2px; border-color: #111;">
+                        <div>
+                            <span class="font-bold uppercase mr-4">NOTIFICATIONS CENTER</span>
+                            <span class="tag bg-blue text-white text-[0.6rem] px-2 py-1 border-2 border-dark">SYSTEM-WIDE</span>
+                        </div>
+                    </div>
+
+                    <!-- Sub-header -->
+                    <div class="flex justify-between mb-6 items-end">
+                        <div style="width: 60%;">
+                            <h3 class="font-heading italic text-3xl font-black mb-1">EVENT STREAMS</h3>
+                            <p class="text-xs text-gray-500 font-medium">Real-time alerts for booking status, infrastructure health, and capacity triggers across the distributed network.</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <button class="brutal-btn outline flex items-center justify-center gap-2" style="border-width: 3px; height: 50px; min-width: 120px;">
+                                <div class="text-xs flex flex-col leading-none"><span>FILTER</span><span>ALL</span></div>
+                            </button>
+                            <button class="brutal-btn dark flex items-center justify-center gap-2" style="border-width: 3px; height: 50px; min-width: 120px;">
+                                <span class="text-white">✔</span>
+                                <div class="text-xs flex flex-col leading-none"><span>CLEAR</span><span>SEEN</span></div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main Grid: Top Section (2/3 and 1/3) -->
+                    <div class="flex gap-6 mb-6">
+                        
+                        <!-- Left Column -->
+                        <div class="flex flex-col gap-6" style="flex: 2;">
+                            
+                            <!-- Pink Critical Card -->
+                            <div class="brutal-card p-0 flex flex-col" style="background: #fbd5d5; border-width: 4px;">
+                                <div class="p-8">
+                                    <div class="flex justify-between items-start mb-16">
+                                        <div class="flex gap-4 items-center">
+                                            <div class="bg-red text-white w-12 h-12 flex items-center justify-center font-black text-2xl border-2 border-dark" style="box-shadow: 2px 2px 0 var(--dark);">⚠️</div>
+                                            <div>
+                                                <span class="tag bg-dark text-white text-[0.6rem] mb-1">CRITICAL_SYSTEM</span>
+                                                <h2 class="text-2xl font-black">NODE_049 OFFLINE</h2>
+                                            </div>
+                                        </div>
+                                        <span class="text-xs text-red font-medium mt-2">02m AGO</span>
+                                    </div>
+                                    
+                                    <hr style="border: 1px solid var(--dark); margin-bottom: 1.5rem;">
+                                    
+                                    <p class="text-sm font-medium text-gray-800 mb-6">Downtown Central Hub connection timed out. 450 parking slots currently unsynced. Manual gate override initiated.</p>
+                                    
+                                    <div class="flex gap-4">
+                                        <button class="brutal-btn bg-red text-white text-[0.7rem] border-[3px] border-dark px-6 py-2">EMERGENCY PROTOCOL</button>
+                                        <button class="brutal-btn bg-white text-dark text-[0.7rem] border-[3px] border-dark px-6 py-2">DISMISS</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Row with 2 small cards -->
+                            <div class="flex gap-6">
+                                <!-- Booking Confirm -->
+                                <div class="brutal-card flex-1 p-5" style="border-left: 8px solid var(--primary-blue); border-width: 4px; border-left-width: 8px;">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-[0.65rem] font-bold text-blue uppercase" style="letter-spacing: 0.1em;">BOOKING_CONFIRM</span>
+                                        <span class="text-[0.6rem] text-gray-400 font-bold">14:02 PM</span>
+                                    </div>
+                                    <h4 class="text-sm font-bold mb-2">RES_ID: #8921-X</h4>
+                                    <p class="text-[0.7rem] text-gray-600 font-medium">User [John Doe] successfully reserved Slot B-22 for 04:00 PM today. Credit verification complete.</p>
+                                </div>
+
+                                <!-- Payment Pending -->
+                                <div class="brutal-card flex-1 p-5" style="border-left: 8px solid var(--accent-yellow); border-width: 4px; border-left-width: 8px;">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-[0.65rem] font-bold uppercase" style="color: #b48500; letter-spacing: 0.1em;">PAYMENT_PENDING</span>
+                                        <span class="text-[0.6rem] text-gray-400 font-bold">13:45 PM</span>
+                                    </div>
+                                    <h4 class="text-sm font-bold mb-2">RES_ID: #8919-A</h4>
+                                    <p class="text-[0.7rem] text-gray-600 font-medium">Payment failure for user [Sarah Smith]. System holding slot for 05:00 minutes before release.</p>
+                                </div>
+                            </div>
+
+                            <!-- Scheduled Maintenance -->
+                            <div class="brutal-card flex items-center justify-between p-6 bg-white" style="border-width: 4px;">
+                                <div class="flex gap-6 items-center">
+                                    <div class="bg-blue text-white w-14 h-14 flex items-center justify-center text-2xl border-2 border-dark" style="box-shadow: 2px 2px 0 var(--dark);">⚙️</div>
+                                    <div>
+                                        <h3 class="text-lg font-black mb-1">SCHEDULED MAINTENANCE</h3>
+                                        <p class="text-[0.75rem] text-gray-500 font-medium leading-relaxed" style="max-width: 32rem;">Database optimization scheduled for 02:00 AM UTC. Expect minor latency spikes in real-time sensor reporting for approx 15 minutes.</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-black">OCT 24</div>
+                                    <div class="text-xs text-gray-400 font-bold uppercase mt-1" style="letter-spacing: 0.1em;">TONIGHT</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Right Column (1/3) -->
+                        <div class="flex flex-col" style="flex: 1;">
+                            <!-- Capacity Reached Yellow Card -->
+                            <div class="brutal-card bg-yellow p-6 h-full flex flex-col" style="border-width: 4px;">
+                                <div class="bg-dark text-white w-10 h-10 flex items-center justify-center font-bold text-xl border-2 border-white mb-6">P</div>
+                                <h3 class="text-xl font-black mb-4 leading-tight uppercase tracking-wide">CAPACITY<br>REACHED</h3>
+                                <p class="text-[0.75rem] font-medium text-gray-800 mb-6 leading-relaxed">Sector 7A [Airport North] has hit 98% occupancy. Rerouting traffic to satellite lot B-12.</p>
+                                
+                                <div class="border-2 border-dark mb-6 overflow-hidden mt-auto" style="box-shadow: 2px 2px 0 var(--dark);">
+                                    <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=500&h=400&fit=crop" class="w-full h-32 object-cover filter contrast-125 saturate-50" alt="Routing Map">
+                                </div>
+                                
+                                <button class="brutal-btn bg-white w-full text-xs font-bold py-3" style="border-width: 3px;">VIEW ROUTING</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Bottom Row: 3 Cards -->
+                    <div class="admin-grid mb-6">
+                        
+                        <!-- Peak Flow Detected -->
+                        <div class="brutal-card bg-dark text-white p-6 flex flex-col justify-between" style="border-width: 4px;">
+                            <div>
+                                <div class="text-[0.65rem] font-bold text-yellow-400 mb-4 flex items-center gap-2" style="letter-spacing: 0.1em;"><span>📈</span> ANALYTICS_INSIGHT</div>
+                                <h3 class="text-lg font-black mb-3 text-white">PEAK FLOW DETECTED</h3>
+                                <p class="text-[0.75rem] text-gray-400 font-medium mb-6 leading-relaxed">Traffic flow is 22% higher than seasonal average for Friday afternoon. Suggesting Dynamic Pricing +$0.50/hr.</p>
+                            </div>
+                            <button class="brutal-btn bg-yellow text-dark text-[0.65rem] font-bold w-full py-2" style="border: 2px solid white; box-shadow: 2px 2px 0 white;">APPLY NOW</button>
+                        </div>
+
+                        <!-- Low Battery Alert -->
+                        <div class="brutal-card bg-white p-6 flex flex-col justify-between" style="border-width: 4px;">
+                            <div>
+                                <div class="text-[0.65rem] font-bold text-blue mb-4 flex items-center gap-2" style="letter-spacing: 0.1em;"><span>((•))</span> SENSOR_HEALTH</div>
+                                <h3 class="text-lg font-black mb-3 text-gray-800">LOW BATTERY ALERT</h3>
+                                <p class="text-[0.75rem] text-gray-600 font-medium mb-6 leading-relaxed">Device #SN-980 (Level 2 North) battery at 12%. Technical dispatch suggested within 48h.</p>
+                            </div>
+                            <button class="brutal-btn outline sm text-[0.65rem] font-bold w-full uppercase py-2" style="border-width: 2px;">LOG TICKET</button>
+                        </div>
+
+                        <!-- Message from HQ -->
+                        <div class="brutal-card bg-white p-6 flex flex-col justify-between" style="border-width: 4px;">
+                            <div>
+                                <div class="text-[0.65rem] font-bold text-gray-600 mb-4 flex items-center gap-2" style="letter-spacing: 0.1em;"><span>💬</span> INTERNAL_COMM</div>
+                                <h3 class="text-lg font-black mb-3 text-gray-800">MESSAGE FROM HQ</h3>
+                                <p class="text-[0.75rem] text-gray-500 font-medium italic mb-6 leading-relaxed">"Please ensure all gate manual resets are logged in the new compliance module by EOD."</p>
+                            </div>
+                            <div class="flex items-center gap-2 mt-auto">
+                                <div class="w-8 h-8 bg-yellow border-2 border-dark rounded-full flex items-center justify-center text-[0.6rem]">👨‍💼</div>
+                                <span class="text-[0.65rem] font-bold uppercase tracking-wide">DIRECTOR_M</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
         </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="spot-modal" class="modal-overlay" style="display: none;">
+        <div class="brutal-modal">
+            <div class="modal-header bg-blue text-white">
+                <h3 class="flex items-center gap-2">ⓘ SPOT MANAGEMENT <span class="text-xs font-normal">INFRASTRUCTURE
+                        NODE</span></h3>
+                <button id="close-modal" class="close-btn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="grid-2col mb-4">
+                    <div>
+                        <span class="sub-text">SPOT IDENTIFIER</span>
+                        <h2 id="modal-spot-id" class="text-3xl font-black">A-102</h2>
+                    </div>
+                    <div>
+                        <span class="sub-text">CURRENT STATUS</span><br>
+                        <span id="modal-spot-status" class="tag bg-pink text-white border-2 border-black">BUSY</span>
+                    </div>
+                </div>
+
+                <div class="modal-image mb-4">
+                    <div class="placeholder-cam">LIVE CAMERA FEED</div>
+                </div>
+
+                <div class="flex gap-4">
+                    <button id="modal-btn-free" class="brutal-btn outline flex-1">RELEASE SPOT</button>
+                    <button id="modal-btn-reserve" class="brutal-btn primary flex-1">RESERVE SPOT</button>
+                </div>
+            </div>
+            <div class="modal-footer text-center text-xs p-2 border-t-2 border-black bg-white">
+                LAST STATE CHANGE: RECENTLY BY SYSTEM AGENT
+            </div>
+        </div>
     </div>
 
     <!-- Scripts -->
     <script src="js/app.js"></script>
 </body>
+
 </html>

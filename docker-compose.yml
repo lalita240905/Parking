@@ -75,6 +75,8 @@ services:
       - USER_SERVICE_URL=http://user-service:3001
       - PARKING_SERVICE_URL=http://parking-service:3002
       - NOTIFICATION_SERVICE_URL=http://notification-service:3003
+    volumes:
+      - ./frontend:/app/frontend
     depends_on:
       - user-service
       - parking-service
